@@ -10,14 +10,10 @@ const PORTA = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/saude', (req, res) => {
-  res.json({ 
-    status: 'online',
-    servico: 'servidor-principal',
-    mensagem: 'Servidor funcionando corretamente',
-    timestamp: new Date().toISOString()
-  });
-});
+// FIXME: Rotas serão adicionadas aqui
+// app.use('/auth', authRoutes);
+// app.use('/videos', videosRoutes);
+// app.use('/favoritos', favoritosRoutes);
 
 app.listen(PORTA, () => {
   console.log(`🚀 Servidor Principal rodando em http://localhost:${PORTA}`);
