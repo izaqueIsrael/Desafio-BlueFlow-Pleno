@@ -215,4 +215,4 @@ Além das permitidas (Express, Jest, dotenv), foram usadas:
 
 **pg:** Sem driver é impossível conectar no PostgreSQL (pedido como preferência no desafio)  
 **cors:** Frontend e backend em portas diferentes, navegador bloqueia sem CORS  
-**swagger-ui-express:** Documentação interativa da API
+**swagger-ui-express:** Documentação interativa da API - Docs: http://localhost:3000/api-docs
