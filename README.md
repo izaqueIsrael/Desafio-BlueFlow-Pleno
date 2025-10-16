@@ -57,6 +57,10 @@ Documentação das principais decisões arquiteturais e tecnológicas do projeto
 - Usa biblioteca `pg` pra conectar
 - Cada serviço tem seu próprio banco
 
+**Opções de execução:**
+- **Docker (recomendado):** `docker-compose up -d` no diretório `backend/`
+- **Local:** PostgreSQL instalado diretamente na máquina
+
 **Nota sobre bibliotecas:**
 - `pg` é o driver básico de conexão com PostgreSQL
 - Necessário pois o desafio pede PostgreSQL como preferência
@@ -171,6 +175,24 @@ tests/
 
 ## Configuração de Ambiente
 
+### Bancos de Dados
+
+**Docker (recomendado):**
+```bash
+cd backend/
+docker-compose up -d
+```
+* Cria automaticamente os dois bancos PostgreSQL
+* Configurado com portas 5432 e 5433
+* Dados persistem em volumes Docker
+
+**Instalação Local:**
+* PostgreSQL 15+ instalado na máquina
+* Criar manualmente os bancos `blueflow_auth` e `blueflow_favoritos`
+* Ajustar portas e credenciais nos arquivos `.env`
+
+### Variáveis de Ambiente
+
 **Arquivos .env.example:**
 * Contém dados sensíveis (chaves de API, secrets) já preenchidos
 * Normalmente não seria feito por questões de segurança
@@ -191,6 +213,6 @@ tests/
 
 Além das permitidas (Express, Jest, dotenv), foram usadas:
 
-**pg:** Sem driver é impossível conectar no PostgreSQL (pedido como preferência no desafio)
-**cors:** Frontend e backend em portas diferentes, navegador bloqueia sem CORS
+**pg:** Sem driver é impossível conectar no PostgreSQL (pedido como preferência no desafio)  
+**cors:** Frontend e backend em portas diferentes, navegador bloqueia sem CORS  
 **swagger-ui-express:** Documentação interativa da API
