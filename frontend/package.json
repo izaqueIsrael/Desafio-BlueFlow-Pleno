@@ -1,0 +1,14 @@
+{
+  "name": "blueflow-frontend",
+  "version": "1.0.0",
+  "description": "Frontend BlueFlow",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^6.0.7"
+  }
+}
