@@ -14,7 +14,7 @@ export class AuthProxy {
     try {
       return await this.client.post<RespostaAuth>('/api/registrar', { email, senha });
     } catch (erro: any) {
-      throw new Error(erro.response?.data?.erro || 'Erro ao registrar usuário');
+      throw new Error(erro.message || 'Erro ao registrar usuário');
     }
   }
 
@@ -22,7 +22,7 @@ export class AuthProxy {
     try {
       return await this.client.post<RespostaAuth>('/api/entrar', { email, senha });
     } catch (erro: any) {
-      throw new Error(erro.response?.data?.erro || 'Erro ao fazer login');
+      throw new Error(erro.message || 'Erro ao fazer login');
     }
   }
 
@@ -30,7 +30,7 @@ export class AuthProxy {
     try {
       return await this.client.get<RespostaAuth>('/api/usuario', token);
     } catch (erro: any) {
-      throw new Error(erro.response?.data?.erro || 'Erro ao buscar usuário');
+      throw new Error(erro.message || 'Erro ao buscar usuário');
     }
   }
 }
