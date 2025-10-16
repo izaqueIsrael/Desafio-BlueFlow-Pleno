@@ -738,10 +738,10 @@ npm run start:dev
 
 ## 👨‍💻 Autor
 
-**João Matheus Gervásio Rodrigues Dantas**
+**João Marcelo Guerra Ribeiro Dantas**
 
 - GitHub: [@jmgrd98](https://github.com/jmgrd98)
-- LinkedIn: [João Dantas](https://linkedin.com/in/seu-perfil)
+- LinkedIn: [João Dantas](https://linkedin.com/in/joao-marcelo-dantas)
 
 ---
 
@@ -750,17 +750,5 @@ npm run start:dev
 Este projeto foi desenvolvido para o desafio técnico BlueFlow.
 
 ---
-
-## 🆘 Precisa de Ajuda?
-
-Se você encontrou algum problema ou tem dúvidas:
-
-1. 📖 Leia a seção de [Troubleshooting](#-troubleshooting)
-2. 🔍 Verifique se seguiu todos os passos da [Instalação](#-instalação)
-3. 🐛 Abra uma [Issue no GitHub](https://github.com/jmgrd98/Desafio-BlueFlow-Pleno/issues)
-
----
-
-⭐ **Se você gostou do projeto, deixe uma estrela no repositório!**
 
 🚀 **Desenvolvido com dedicação para o desafio BlueFlow**
