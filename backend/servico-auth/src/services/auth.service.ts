@@ -71,7 +71,7 @@ export class AuthService {
     return {
       id: usuario.id,
       email: usuario.email,
-      criadoEm: usuario.createdAt
+      criadoEm: usuario.created_at
     };
   }
 }
