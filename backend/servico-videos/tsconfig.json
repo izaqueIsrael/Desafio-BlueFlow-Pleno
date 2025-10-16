@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "module": "commonjs",
-    "target": "ES2020",
-    "lib": ["ES2020"],
-    "types": ["node"],
-
-    "sourceMap": true,
-    "declaration": true,
-
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "moduleResolution": "node"
-  }
+    "target": "ES2020", // isso define a versão do JavaScript que o TypeScript irá compilar para
+    "module": "commonjs", // isso define o sistema de módulos que o TypeScript irá usar
+    "lib": ["ES2020"], // isso inclui as definições de tipo da biblioteca padrão do ES2020
+    "outDir": "./dist", // isso define o diretório de saída para os arquivos JavaScript compilados
+    "rootDir": "./src", // isso define o diretório raiz que contém os arquivos de origem TypeScript
+    "strict": true, // isso ativa todas as opções de verificação de tipo estritas
+    "esModuleInterop": true, // isso permite a interoperabilidade entre módulos ES e CommonJS
+    "skipLibCheck": true, // isso pula a verificação de tipo dos arquivos de declaração (.d.ts) para acelerar a compilação
+    "forceConsistentCasingInFileNames": true, // isso garante que o uso de maiúsculas e minúsculas nos nomes de arquivos seja consistente
+    "resolveJsonModule": true, // isso permite importar arquivos JSON como módulos
+    "declaration": true, // isso gera arquivos de declaração (.d.ts) para os arquivos TypeScript compilados
+    "declarationMap": true, // isso gera mapas de declaração para facilitar a depuração
+    "sourceMap": true // isso gera arquivos de mapa de origem para facilitar a depuração
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "testes"]
 }
