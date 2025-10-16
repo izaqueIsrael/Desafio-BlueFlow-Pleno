@@ -33,7 +33,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 Database.inicializar()
   .then(() => {
     app.listen(PORTA, () => {
-      console.log(`⭐ Serviço de Favoritos rodando em http://localhost:${PORTA}`);
+      console.log(`Serviço de Favoritos rodando em http://localhost:${PORTA}`);
     });
   })
   .catch((erro) => {

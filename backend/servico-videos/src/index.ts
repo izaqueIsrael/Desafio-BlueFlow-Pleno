@@ -30,9 +30,9 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 try {
   validateYoutubeConfig();
   app.listen(PORTA, () => {
-    console.log(`🎥 Serviço de Vídeos rodando em http://localhost:${PORTA}`);
+    console.log(`Serviço de Vídeos rodando em http://localhost:${PORTA}`);
   });
 } catch (erro: any) {
-  console.error('❌ Erro ao iniciar serviço:', erro.message);
+  console.error('Erro ao iniciar serviço:', erro.message);
   process.exit(1);
 }

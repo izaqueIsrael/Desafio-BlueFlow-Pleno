@@ -34,9 +34,9 @@ if (require.main === module) {
   const app = createApp();
 
   app.listen(PORTA, () => {
-    console.log(`🚀 Servidor Principal rodando em http://localhost:${PORTA}`);
-    console.log(`🔐 Auth Service: ${process.env.AUTH_SERVICE_URL}`);
-    console.log(`🎥 Videos Service: ${process.env.VIDEOS_SERVICE_URL}`);
-    console.log(`⭐ Favoritos Service: ${process.env.FAVORITOS_SERVICE_URL}`);
+    console.log(`Servidor Principal rodando em http://localhost:${PORTA}`);
+    console.log(`Auth Service: ${process.env.AUTH_SERVICE_URL}`);
+    console.log(`Videos Service: ${process.env.VIDEOS_SERVICE_URL}`);
+    console.log(`Favoritos Service: ${process.env.FAVORITOS_SERVICE_URL}`);
   });
 }
