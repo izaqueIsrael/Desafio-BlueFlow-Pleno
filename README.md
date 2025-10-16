@@ -1,55 +1,218 @@
-# Desafio BlueFlow
+# Decisões Técnicas e Trade-offs
 
-Crie uma aplicação **web** com proteção de acesso (**autenticação + autorização**) que **liste, pesquise e permita favoritar vídeos do YouTube** usando a **API oficial e gratuita do YouTube**.
-
-⚠️ **Regra importante**: Use **TypeScript** e **não utilize bibliotecas/frameworks além de**: **Express** e/ou **Nest** (ou similares no mesmo nível). Para testes, é **permitido** usar **Jest** (ou similares) e pode usar o DOTENV(ou similares).
-
-
-## 🎯 Objetivo
-Entregar um sistema **simples, funcional e bem estruturado**, com **frontend** e **backend** separados, construído em **microsserviços** (ex.: `auth-service`, `videos-service`, `favorites-service`).
+Documentação das principais decisões arquiteturais e tecnológicas do projeto **BlueFlow**.
 
 ---
 
-## 🏗️ Arquitetura (exigida)
-- Separar em **frontend** e **backend**.
-- **Microsserviços** no backend (ex.: serviço de **auth**, **vídeos**, **favoritos**).
-- Comunicação entre serviços.
-- Aplicar **POO** e **design patterns** adequados (**Factory**, **Strategy**, **Adapter**, etc.).
-- Testes automatizados com Jest ou similares.
+## Arquitetura do Sistema
+
+### Decisão: Dividir em Microsserviços
+
+**O que foi feito:**
+* 4 serviços separados: servico-auth, servico-videos, servico-favoritos, servidor-principal
+* Serviços conversam entre si via HTTP/REST
+* Servidor principal funciona como portão de entrada único
+
+**Por que essa escolha:**
+* Cada serviço cuida de uma coisa específica
+* Dá pra aumentar a capacidade de cada serviço separadamente
+* Cada um pode ser desenvolvido e atualizado de forma independente
+
+**Prós e contras:**
+* **Positivo:** Fácil adicionar coisas novas sem quebrar o que já funciona, se um falhar os outros continuam
+* **Negativo:** Comunicação entre serviços é mais lenta, mais difícil de encontrar erros
 
 ---
 
-## 🧰 Tecnologias Permitidas
-- **TypeScript** em todos os serviços.
-- **Express** e/ou **Nest** (ou similares no mesmo nível).
-- **Jest** (ou similares) para testes.
-- **DOTENV** (ou similares).
-- **Proibido**: adicionar outras **libs/frameworks** além dos citados acima.
+## Tecnologias e Frameworks
+
+### Decisão: Express.js ao invés de Nest.js
+
+**Por que Express:**
+* Controle total de como montar a aplicação
+* Mais leve e direto ao ponto
+* Suficiente para o que o desafio pede
+
+**Prós e contras:**
+* **Positivo:** Total liberdade, fácil de aprender
+* **Negativo:** Tem que montar tudo na mão
+
+### Decisão: TypeScript em tudo
+
+**Por que TypeScript:**
+* Pega erros antes do código rodar
+* Código se explica sozinho com os tipos
+* Requisito do desafio
 
 ---
 
-## ✅ Funcionalidades Mínimas
-- **Autenticação/Autorização**: fluxo de login e controle de acesso a rotas protegidas.
-- **Listagem/Pesquisa**: consumir a **API gratuita do YouTube** para listar e pesquisar vídeos.
-- **Favoritos**: marcar/desmarcar vídeos como favoritos **por usuário autenticado**.
-- **Persistência**: armazenar **favoritos** e **usuários** (banco à sua escolha; **preferência: PostgreSQL**).
+## Onde os Dados Ficam Salvos
+
+### Decisão: PostgreSQL desde o começo
+
+**O que foi feito:**
+- Dois bancos de dados PostgreSQL separados
+- blueflow_auth (porta 5432) - guarda usuários e senhas
+- blueflow_favoritos (porta 5433) - guarda vídeos favoritados
+- Usa biblioteca `pg` pra conectar
+- Cada serviço tem seu próprio banco
+
+**Opções de execução:**
+- **Docker (recomendado):** `docker-compose up -d` no diretório `backend/`
+- **Local:** PostgreSQL instalado diretamente na máquina
+
+**Nota sobre bibliotecas:**
+- `pg` é o driver básico de conexão com PostgreSQL
+- Necessário pois o desafio pede PostgreSQL como preferência
 
 ---
 
-## 🧪 O que será avaliado
-- **Qualidade do código**: organização, legibilidade, **testes básicos**.
-- **Arquitetura**: **isolamento** entre serviços, **contratos claros** e mensagens/erros compreensíveis.
-- **Boas práticas**: **SOLID**, tratamento de erros, logs, variáveis de ambiente.
-- **Segurança**: proteção de rotas, **armazenamento seguro** de credenciais/chaves.
-- **UX essencial**: interface **simples** e **funcional** no frontend.
+## Segurança e Login
+
+### Decisão: JWT e Hash feitos do zero
+
+**O que foi feito:**
+* JWT criado manualmente com HMAC-SHA256
+* Codificação Base64Url implementada
+* Senha protegida com SHA-256 e sal aleatório de 16 bytes
+* Token Bearer enviado no cabeçalho Authorization
+* Chave secreta JWT gerada com: `node -e "console.log(require('crypto').randomBytes(64).toString('base64'))"`
+
+**Por que essa escolha:**
+* O desafio não permite usar bibliotecas prontas (jsonwebtoken, bcrypt)
+* Mostra que entendo como funciona por baixo dos panos
+
+**Importante:** Em produção de verdade é obrigatório usar bcrypt e jsonwebtoken por segurança.
 
 ---
 
-## 💡 Dicas finais
-- Documente decisões técnicas e trade-offs.
-- Foque no essencial: faça o feijão com arroz.
+## Organização do Código
 
-## Atenção!
-Para entrega, faça um **FORK** desse repositório e mande um Pull Request do seu desafio até às 23:59:59h do dia 16 de outubro de 2025 no fuso horário de Brasília.
+### Repository + Service Pattern
 
-Prove seu valor e boa sorte!
+**Como funciona:**
+```
+Repository → busca e salva dados (PostgreSQL)
+Service → regras de negócio
+Controller → recebe e responde requisições HTTP
+```
+
+**Por que:**
+* Fácil de testar cada parte separada
+* Cada camada tem sua responsabilidade clara
+* Segue boas práticas de programação
+
+### Factory e Adapter Patterns
+
+**Como funciona:**
+* **Factory:** HttpClient criado com configurações específicas para cada serviço
+* **Adapter:** YouTubeAdapter traduz dados da API do YouTube pro formato da aplicação
+
+**Por que:**
+* Isola a conversão de dados externos
+* Fácil trocar implementação de clientes HTTP
+
+---
+
+## Como Testar o Código
+
+### Decisão: Jest para testes
+
+**Estrutura:**
+```
+tests/
+├── unit/           (testa funções e classes isoladas)
+└── integration/    (testa serviços trabalhando juntos)
+```
+
+**Por que Jest:**
+* Funciona direto com TypeScript
+* Já vem com tudo que precisa (mocking, coverage)
+* Roda testes em paralelo
+
+**Cobertura:** Testes implementados nos serviços de autenticação e validação do frontend
+
+---
+
+## Como os Serviços Conversam
+
+### Decisão: HTTP/REST direto
+
+**O que foi feito:**
+* HTTP direto entre serviços
+* Dados trafegam em JSON
+* Tempo limite configurado
+
+**Prós e contras:**
+* **Positivo:** Simples de fazer e debugar
+* **Negativo:** Se um serviço cai, pode afetar outros
+
+---
+
+## Tratamento de Erros
+
+**O que foi feito:**
+* Middleware de erro centralizado em cada serviço
+* Validações nos controllers antes de processar
+* Try-catch em todas operações assíncronas
+* Mensagens de erro claras pro usuário
+
+---
+
+## O Que Foi Entregue
+
+**Requisitos do desafio cumpridos:**
+- TypeScript em todo código (modo strict)
+- Microsserviços funcionando
+- Testes automatizados configurados
+- Padrões de projeto (Repository, Factory, Adapter)
+- Sistema de login e proteção de rotas
+- Busca na API do YouTube
+- Sistema de favoritos por usuário
+- Frontend e backend separados
+
+---
+
+## Configuração de Ambiente
+
+### Bancos de Dados
+
+**Docker (recomendado):**
+```bash
+cd backend/
+docker-compose up -d
+```
+* Cria automaticamente os dois bancos PostgreSQL
+* Configurado com portas 5432 e 5433
+* Dados persistem em volumes Docker
+
+**Instalação Local:**
+* PostgreSQL 15+ instalado na máquina
+* Criar manualmente os bancos `blueflow_auth` e `blueflow_favoritos`
+* Ajustar portas e credenciais nos arquivos `.env`
+
+### Variáveis de Ambiente
+
+**Arquivos .env.example:**
+* Contém dados sensíveis (chaves de API, secrets) já preenchidos
+* Normalmente não seria feito por questões de segurança
+* Deixado assim para facilitar os testes do avaliador
+* **Para usar:** copie o conteúdo do `.env.example` para `.env` em cada serviço
+
+**Arquivos com dados:**
+* `backend/servico-auth/.env.example` - JWT_SECRET já configurado
+* `backend/servico-videos/.env.example` - YOUTUBE_API_KEY já configurado
+* `backend/servico-favoritos/.env.example` - DATABASE_URL configurada
+* `backend/servidor-principal/.env.example` - URLs dos serviços
+
+**Importante:** Em produção, esses dados nunca devem estar versionados.
+
+---
+
+## Bibliotecas Adicionais
+
+Além das permitidas (Express, Jest, dotenv), foram usadas:
+
+**pg:** Sem driver é impossível conectar no PostgreSQL (pedido como preferência no desafio)  
+**cors:** Frontend e backend em portas diferentes, navegador bloqueia sem CORS  
+**swagger-ui-express:** Documentação interativa da API - Docs: http://localhost:3000/api-docs

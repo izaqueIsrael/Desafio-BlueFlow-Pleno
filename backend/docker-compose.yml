@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres-auth:
+    image: postgres:15
+    container_name: postgres-blueflow-auth
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: blueflow_auth
+    volumes:
+      - postgres-auth-data:/var/lib/postgresql/data
+    networks:
+      - blueflow-network
+
+  postgres-favoritos:
+    image: postgres:15
+    container_name: postgres-blueflow-favoritos
+    restart: unless-stopped
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: blueflow_favoritos
+    volumes:
+      - postgres-favoritos-data:/var/lib/postgresql/data
+    networks:
+      - blueflow-network
+
+networks:
+  blueflow-network:
+    driver: bridge
+
+volumes:
+  postgres-auth-data:
+  postgres-favoritos-data:
