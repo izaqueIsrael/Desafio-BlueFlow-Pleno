@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { corsMiddleware } from './middlewares/cors';
 import authRoutes from './routes/auth.routes';
+import favoritosRoutes from './routes/favoritos.routes';
+import videosRoutes from './routes/videos.routes';
 
 dotenv.config();
 
@@ -12,6 +14,8 @@ app.use(corsMiddleware);
 app.use(express.json());
 
 app.use('/auth', authRoutes);
+app.use('/videos', videosRoutes);
+app.use('/favoritos', favoritosRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });

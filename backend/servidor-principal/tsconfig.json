@@ -7,6 +7,7 @@
     "rootDir": "./src", // isso define o diretório raiz que contém os arquivos de origem TypeScript
     "strict": true, // isso ativa todas as opções de verificação de tipo estritas
     "esModuleInterop": true, // isso permite a interoperabilidade entre módulos ES e CommonJS
+    "allowSyntheticDefaultImports": true, // isso permite importar módulos com export default
     "skipLibCheck": true, // isso pula a verificação de tipo dos arquivos de declaração (.d.ts) para acelerar a compilação
     "forceConsistentCasingInFileNames": true, // isso garante que o uso de maiúsculas e minúsculas nos nomes de arquivos seja consistente
     "resolveJsonModule": true, // isso permite importar arquivos JSON como módulos
