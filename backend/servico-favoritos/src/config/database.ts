@@ -5,8 +5,8 @@ dotenv.config();
 
 const pool = new Pool({
   host: 'localhost',
-  port: 5432,
-  database: 'blueflow',
+  port: 5433,
+  database: 'blueflow_favoritos',
   user: 'postgres',
   password: 'postgres',
   max: 20,
