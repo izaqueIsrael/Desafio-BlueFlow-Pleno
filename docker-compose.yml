@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Banco de dados do auth-service
+  auth-db:
+    image: postgres:15-alpine
+    container_name: auth-db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+
+  # Banco de dados do videos-service
+  videos-db:
+    image: postgres:15-alpine
+    container_name: videos-db
+    environment:
+      POSTGRES_DB: videos_db
+      POSTGRES_USER: videos_user
+      POSTGRES_PASSWORD: videos_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - videos-data:/var/lib/postgresql/data
+
+  # Banco de dados do favorites-service
+  favorites-db:
+    image: postgres:15-alpine
+    container_name: favorites-db
+    environment:
+      POSTGRES_DB: favorites_db
+      POSTGRES_USER: favorites_user
+      POSTGRES_PASSWORD: favorites_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - favorites-data:/var/lib/postgresql/data
+
+volumes:
+  auth-data:
+  videos-data:
+  favorites-data:
