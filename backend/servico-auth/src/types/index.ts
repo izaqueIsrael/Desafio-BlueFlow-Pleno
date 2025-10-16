@@ -1,13 +1,10 @@
 export interface Usuario {
-  id: string;
-  nome: string;
+  id: number;
   email: string;
-  senhaCriptografada: string;
   criadoEm: Date;
 }
 
 export interface RequisicaoRegistro {
-  nome: string;
   email: string;
   senha: string;
 }
