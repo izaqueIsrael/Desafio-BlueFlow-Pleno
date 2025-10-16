@@ -1,7 +1,14 @@
+import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
+dotenv.config();
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  host: 'localhost',
+  port: 5432,
+  database: 'blueflow',
+  user: 'postgres',
+  password: 'postgres',
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
