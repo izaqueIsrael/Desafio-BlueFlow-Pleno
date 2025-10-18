@@ -1,0 +1,29 @@
+{
+  "name": "@blueflow/auth-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:setup": "prisma migrate deploy",
+    "start:dev": "tsx src/index.ts",
+    "build": "tsc",
+    "test": "dotenv -e .env.test -- prisma migrate deploy && jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.3",
+  "dependencies": {
+    "@prisma/client": "^6.17.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "dotenv-cli": "^10.0.0",
+    "prisma": "^6.17.1",
+    "tsx": "^4.20.6"
+  }
+}
